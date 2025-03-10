@@ -1,5 +1,5 @@
 #!/bin/bash
-debug=true
+debug=false
 
 # base_Path="/tmp/slicer-cli"
 base_Path="$(realpath $PWD/..)"
