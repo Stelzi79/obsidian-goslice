@@ -10,17 +10,21 @@ import (
 func main() {
 	base_path := "/mnt/Repositories/knowlage-base/Personal Knowlage Base/New Stuff"
 	selected_file := "Software.md"
-	// selected_moveFolder := base_path + "/Software"
+	selected_moveToFolder := base_path + "/Software"
+
 	fmt.Println("📢Obsidian-Goslice/slicer-cli")
 
 	// var tokens []string
-
-	tokens := tokenizer.Tokens{}
+	var tokens tokenizer.Tokens
+	tokens.RawTokenList = []tokenizer.Token{}
+	tokens.FilePath = base_path + "/" + selected_file
+	tokens.MoveToFolder = selected_moveToFolder
 
 	// read in the file and put the content into RawLines-Tokens
-	tokenizer.LoadRawLinesTokensFromFile(base_path+"/"+selected_file, &tokens)
+	tokenizer.LoadRawLinesTokensFromFile(base_path+"/"+selected_file, &tokens.RawTokenList)
 
 	fmt.Println("TestPrint:")
 	litter.Dump(tokenizer.SelectN(10, tokens))
+	// litter.Dump(tokenizer.SelectN(5, tokens))
 
 }

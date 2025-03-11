@@ -6,15 +6,10 @@ import (
 	"os"
 )
 
-type Token struct {
-	RawLine string
-}
-
-type Tokens []Token
-
 // LoadRawLinesTokensFromFile reads a file and puts the content into RawLines-Tokens
-func LoadRawLinesTokensFromFile(filePath string, tokens *Tokens) {
+func LoadRawLinesTokensFromFile(filePath string, tokens *[]Token) {
 	// open file
+
 	fh, err := os.Open(filePath)
 	if err != nil {
 		fmt.Printf("❌Error: %s\n", err)
@@ -23,13 +18,7 @@ func LoadRawLinesTokensFromFile(filePath string, tokens *Tokens) {
 	defer fh.Close()
 	scanner := bufio.NewScanner(fh)
 	for scanner.Scan() {
+
 		*tokens = append(*tokens, Token{RawLine: scanner.Text()})
 	}
-}
-
-func SelectN(n int, tokens Tokens) Tokens {
-	if n > len(tokens) {
-		return tokens
-	}
-	return tokens[:n]
 }
