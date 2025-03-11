@@ -16,15 +16,14 @@ func main() {
 
 	// var tokens []string
 	var tokens tokenizer.Tokens
-	tokens.RawTokenList = []tokenizer.Token{}
+	tokens.RawTokenList = []tokenizer.RawToken{}
 	tokens.FilePath = base_path + "/" + selected_file
 	tokens.MoveToFolder = selected_moveToFolder
 
 	// read in the file and put the content into RawLines-Tokens
-	tokenizer.LoadRawLinesTokensFromFile(base_path+"/"+selected_file, &tokens.RawTokenList)
+	tokenizer.LoadRawLinesTokensFromFile(&tokens)
 
 	fmt.Println("TestPrint:")
-	litter.Dump(tokenizer.SelectN(10, tokens))
-	// litter.Dump(tokenizer.SelectN(5, tokens))
+	litter.Dump(tokenizer.SelectN(9, tokens))
 
 }

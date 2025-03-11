@@ -4,9 +4,11 @@ type Token struct {
 	RawLine string
 }
 
+type RawToken string
+
 type Tokens struct {
 	FilePath           string
 	MoveToFolder       string
-	RawTokenList       []Token
+	RawTokenList       []RawToken
 	ProcessedTokenList []Token
 }
