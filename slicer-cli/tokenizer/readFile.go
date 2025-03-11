@@ -12,7 +12,8 @@ type Token struct {
 
 type Tokens []Token
 
-func ReadFile(filePath string, tokens *Tokens) {
+// LoadRawLinesTokensFromFile reads a file and puts the content into RawLines-Tokens
+func LoadRawLinesTokensFromFile(filePath string, tokens *Tokens) {
 	// open file
 	fh, err := os.Open(filePath)
 	if err != nil {
@@ -24,4 +25,11 @@ func ReadFile(filePath string, tokens *Tokens) {
 	for scanner.Scan() {
 		*tokens = append(*tokens, Token{RawLine: scanner.Text()})
 	}
+}
+
+func SelectN(n int, tokens Tokens) Tokens {
+	if n > len(tokens) {
+		return tokens
+	}
+	return tokens[:n]
 }

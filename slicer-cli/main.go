@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Stelzi79/obsidian-goslice/slicer-cli/tokenizer"
+	"github.com/sanity-io/litter"
 )
 
 func main() {
@@ -13,8 +14,13 @@ func main() {
 	fmt.Println("📢Obsidian-Goslice/slicer-cli")
 
 	// var tokens []string
+
 	tokens := tokenizer.Tokens{}
-	tokenizer.ReadFile(base_path+"/"+selected_file, &tokens)
-	fmt.Println("TestPrint:\n", tokens)
+
+	// read in the file and put the content into RawLines-Tokens
+	tokenizer.LoadRawLinesTokensFromFile(base_path+"/"+selected_file, &tokens)
+
+	fmt.Println("TestPrint:")
+	litter.Dump(tokenizer.SelectN(10, tokens))
 
 }
