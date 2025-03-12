@@ -23,6 +23,10 @@ func main() {
 	// read in the file and put the content into RawLines-Tokens
 	tokenizer.LoadRawLinesTokensFromFile(&tokens)
 
+	// detect token types
+	tokenizer.DetectTokenTypes(&tokens)
+
+	// Select the first 9 tokens
 	fmt.Println("TestPrint:")
 	litter.Dump(tokenizer.SelectN(9, tokens))
 
