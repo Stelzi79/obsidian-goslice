@@ -4,14 +4,15 @@ func (EmptyLineToken) isToken() {}
 
 type EmptyLineToken struct{}
 
-func detectAndProcessEmptyToken(token string, tokens *Tokens) bool {
-
+func detectAndProcessEmptyToken(token string, tokens *Tokens, fmToken *FrontMatterToken, hdToken *Header3Token) bool {
 	if detectedEmptyToken(token) {
 		processEmptyLineToken(token, tokens)
 		return true
-	} else {
+	}
+	if *fmToken != nil || *hdToken != nil {
 		return false
 	}
+	return false
 }
 
 func detectedEmptyToken(token string) bool {

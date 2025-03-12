@@ -16,10 +16,10 @@ func (fmToken *FrontMatterToken) Add(key string, value string) {
 	(*fmToken)[key] = value
 }
 
-func detectAndProcessFrontMatterToken(token string, tokens *Tokens, fmToken *FrontMatterToken) bool {
+func detectAndProcessFrontMatterToken(token string, tokens *Tokens, fmToken *FrontMatterToken, fmDetected *bool) bool {
 
 	// fmt.Println(token)
-	if len(token) < 3 {
+	if len(token) < 3 || *fmDetected {
 		return false
 	}
 	if token[0:3] == "---" && *fmToken == nil {
@@ -34,11 +34,13 @@ func detectAndProcessFrontMatterToken(token string, tokens *Tokens, fmToken *Fro
 		}
 		tokens.ProcessedTokenList = append(tokens.ProcessedTokenList, Token(*fmToken))
 		*fmToken = nil
+		*fmDetected = true
 		return true
 	}
-	if fmToken != nil && strings.Contains(token, ":") {
+	if fmToken != nil && !*fmDetected && strings.Contains(token, ":") {
 		values := strings.SplitN(token, ":", 2)
 		fmToken.Add(strings.TrimSpace(values[0]), strings.TrimSpace(values[1]))
+		return true
 	}
-	return true
+	return false
 }

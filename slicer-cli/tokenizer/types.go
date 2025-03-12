@@ -8,7 +8,7 @@ func (UnDetectedToken) isToken() {}
 
 type RawToken string
 
-type UnDetectedToken struct{}
+type UnDetectedToken string
 
 type Tokens struct {
 	FilePath           string

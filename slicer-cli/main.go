@@ -28,6 +28,6 @@ func main() {
 
 	// Select the first 9 tokens
 	fmt.Println("TestPrint:")
-	litter.Dump(tokenizer.SelectN(9, tokens))
+	litter.Dump(tokenizer.SelectN(20, tokens))
 
 }

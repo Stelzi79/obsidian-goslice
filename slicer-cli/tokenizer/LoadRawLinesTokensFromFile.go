@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 // LoadRawLinesTokensFromFile reads a file and puts the content into RawLines-Tokens
@@ -18,6 +19,6 @@ func LoadRawLinesTokensFromFile(tokens *Tokens) {
 	defer fh.Close()
 	scanner := bufio.NewScanner(fh)
 	for scanner.Scan() {
-		tokens.RawTokenList = append(tokens.RawTokenList, RawToken(scanner.Text()))
+		tokens.RawTokenList = append(tokens.RawTokenList, RawToken(strings.TrimSpace(scanner.Text())))
 	}
 }
