@@ -1,5 +1,9 @@
 package tokenizer
 
+func (EmptyLineToken) isToken() {}
+
+type EmptyLineToken struct{}
+
 func detectAndProcessEmptyToken(token string, tokens *Tokens) bool {
 
 	if detectedEmptyToken(token) {

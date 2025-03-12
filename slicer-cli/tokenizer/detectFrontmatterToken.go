@@ -4,6 +4,18 @@ import (
 	"strings"
 )
 
+func (FrontMatterToken) isToken() {}
+
+type FrontMatterToken map[string]string
+
+func (fmToken *FrontMatterToken) Add(key string, value string) {
+	// fmt.Printf("Adding key: %s, value: %s\n", key, value)
+	if *fmToken == nil {
+		*fmToken = make(FrontMatterToken)
+	}
+	(*fmToken)[key] = value
+}
+
 func detectAndProcessFrontMatterToken(token string, tokens *Tokens, fmToken *FrontMatterToken) bool {
 
 	// fmt.Println(token)
@@ -28,7 +40,5 @@ func detectAndProcessFrontMatterToken(token string, tokens *Tokens, fmToken *Fro
 		values := strings.SplitN(token, ":", 2)
 		fmToken.Add(strings.TrimSpace(values[0]), strings.TrimSpace(values[1]))
 	}
-
 	return true
-
 }
