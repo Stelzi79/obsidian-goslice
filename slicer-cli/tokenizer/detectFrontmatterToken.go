@@ -1,46 +1,34 @@
 package tokenizer
 
+import (
+	"strings"
+)
+
 func detectAndProcessFrontMatterToken(token string, tokens *Tokens, fmToken *FrontMatterToken) bool {
-	if fmToken == nil && len(token) < 3 {
+
+	// fmt.Println(token)
+	if len(token) < 3 {
 		return false
 	}
-	if token[0:3] == "---" && fmToken == nil {
+	if token[0:3] == "---" && *fmToken == nil {
+		// start of frontmatter
 		fmToken = new(FrontMatterToken)
-		*fmToken = make(FrontMatterToken)
 		return true
 	}
-	if fmToken != nil {
-		(*fmToken)[token] = token
-	}
-	if token[0:3] == "---" && fmToken != nil {
+	if token[0:3] == "---" && *fmToken != nil {
+		// end of frontmatter
+		if *fmToken == nil {
+			panic("fmToken should be nil")
+		}
 		tokens.ProcessedTokenList = append(tokens.ProcessedTokenList, Token(*fmToken))
 		*fmToken = nil
 		return true
+	}
+	if fmToken != nil && strings.Contains(token, ":") {
+		values := strings.SplitN(token, ":", 2)
+		fmToken.Add(strings.TrimSpace(values[0]), strings.TrimSpace(values[1]))
 	}
 
 	return true
 
 }
-
-// func processFrontMatterToken(token string, tokens *Tokens, fmToken *FrontMatterToken) {
-
-// 	// if len(token) > 3 {
-// 	// 	if token[0:3] == "---" && !detectedFrontMatterStart {
-// 	// 		detectedFrontMatterStart = true
-// 	// 	} else if token[0:3] == "---" && detectedFrontMatterStart {
-// 	// 		detectedFrontMatterStart = false
-// 	// 		// detectedFrontMatterEnd := true
-// 	// 	}
-// 	// }
-
-// 	panic("unimplemented")
-// }
-
-// func detectedFrontMatterToken(token string, fmToken *FrontMatterToken) bool {
-// 	// if fmToken == nil && len(token) < 3 {
-// 	// 	return false
-// 	// }
-// 	// if token[0:3] == "---" {
-// 	// }
-// 	return false
-// }
