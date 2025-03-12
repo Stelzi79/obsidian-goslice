@@ -2,9 +2,7 @@ package tokenizer
 
 func DetectTokenTypes(tokens *Tokens) {
 
-	detectedFrontMatterStart := false
-	// detectedFrontMatterEnd := false
-
+	var fmToken FrontMatterToken
 	for _, token := range tokens.RawTokenList {
 		// fmt.Println(token)
 
@@ -14,16 +12,11 @@ func DetectTokenTypes(tokens *Tokens) {
 		}
 
 		// Check if the token starts with ---
-		if len(token) > 3 {
-			if token[0:3] == "---" && !detectedFrontMatterStart {
-				detectedFrontMatterStart = true
-			} else if token[0:3] == "---" && detectedFrontMatterStart {
-				detectedFrontMatterStart = false
-				// detectedFrontMatterEnd := true
-			}
+		if detectAndProcessFrontMatterToken(string(token), tokens, &fmToken) {
+			continue
 		}
 
-		// add unDetectedToken
+		// finally add unDetectedToken
 		tokens.ProcessedTokenList = append(tokens.ProcessedTokenList, Token(UnDetectedToken{}))
 
 	}
